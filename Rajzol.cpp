@@ -1,12 +1,14 @@
 #include "Rajzol.h"
 #include "graphics.hpp"
+#include <iostream>
+#include <sstream>
 
 using namespace std;
 using namespace genv;
 
-Rajzol::Rajzol(int kor_szam)
+Rajzol::Rajzol()
 {
-    set_kor(kor_szam);
+
 }
 
 Rajzol::~Rajzol()
@@ -14,13 +16,11 @@ Rajzol::~Rajzol()
     //dtor
 }
 
-int Rajzol::get_kor() const
+void Rajzol::full_clr()
 {
-    return korszam;
-}
-void Rajzol::set_kor(int new_kor)
-{
-    korszam = new_kor;
+    gout << move_to(0,0)
+         << color(0, 0, 0)
+         << box(1330, 830);
 }
 
 void Rajzol::clr_src()
@@ -89,7 +89,7 @@ void Rajzol::palya_rajz()
     };
 }
 
-void Rajzol::kor_rajz()
+void Rajzol::kor_rajz(int korszam)
 {
     if(korszam==1)//zold
     {
@@ -106,46 +106,73 @@ void Rajzol::kor_rajz()
 
 }
 
-void Rajzol::green_rajz(event evt, Rajzol felulet)
+void Rajzol::green_rajz(event evt, Rajzol felulet, Point a, Size b, int i, int j)
 {
-    if(evt.type==ev_mouse && evt.button==btn_left)
-    {
-        for(int i=0; i<15; i++) //oszlop vizsgalat
-        {
-            for(int j=0; j<15; j++) //sor
-            {
-                if(evt.pos_x>=10+i*54 && evt.pos_x<=10+(i+1)*54 && evt.pos_y>=10+j*54 && evt.pos_y<=10+(j+1)*54)
-                {
-                    gout << color(170, 255, 209)
-                         << move_to(i*54+10,j*54+10)
-                         << box(54,54);
-                    korszam=2;
-                    felulet.set_kor(korszam);
-                }
-            }
-        }
-    }
+    gout << color(170, 255, 209)
+         << move_to(i*b.w+a.x,j*b.h+a.y)
+         << box(b.w,b.h);
 }
 
-void Rajzol::blue_rajz(event evt, Rajzol felulet)
+void Rajzol::blue_rajz(event evt, Rajzol felulet, Point a, Size b, int i, int j)
 {
-    Point a(10,10);
-    Size b(54,54);
-    if(evt.type==ev_mouse && evt.button==btn_left)
-    {
-        for(int i=0; i<15; i++) //oszlop vizsgalat
-        {
-            for(int j=0; j<15; j++) //sor
-            {
-                if(evt.pos_x>=a.x+i*b.w && evt.pos_x<=a.x+(i+1)*b.w && evt.pos_y>=a.y+j*b.h && evt.pos_y<=a.y+(j+1)*b.h)
-                {
-                    gout << color(167, 199, 255)
-                         << move_to(i*b.w+a.x,j*b.h+a.y)
-                         << box(b.w,b.h);
-                    korszam=1;
-                    felulet.set_kor(korszam);
-                }
-            }
-        }
-    }
+    gout << color(167, 199, 255)
+         << move_to(i*b.w+a.x,j*b.h+a.y)
+         << box(b.w,b.h);
+}
+
+void Rajzol::telepalya_rajz()
+{
+    gout << move_to(415, 265)
+         << color(0, 0, 0)
+         << box(500, 300)
+         << move_to(415, 265)
+         << color(255, 255, 255)
+         << box(500, 10)
+         << box(-10, 291)
+         << box(-491, -10)
+         << box(10, -290)
+         << move_to(570, 375)
+         << color(255, 0, 0)
+         << text("THE BOARD IS FULL")
+         << move_to(615, 405)
+         << text("YOU LOST!")
+         << move_to(640, 520)
+         << text("RETRY");
+
+}
+
+void Rajzol::zoldgyozelem_rajz()
+{
+    gout << move_to(415, 265)
+         << color(0, 0, 0)
+         << box(500, 300)
+         << move_to(415, 265)
+         << color(255, 255, 255)
+         << box(500, 10)
+         << box(-10, 291)
+         << box(-491, -10)
+         << box(10, -290)
+         << color(0, 255, 0)
+         << move_to(610, 400)
+         << text("GREEN WON!")
+         << move_to(640, 520)
+         << text("RETRY");
+}
+
+void Rajzol::kekgyozelem_rajz()
+{
+    gout << move_to(415, 265)
+         << color(0, 0, 0)
+         << box(500, 300)
+         << move_to(415, 265)
+         << color(255, 255, 255)
+         << box(500, 10)
+         << box(-10, 291)
+         << box(-491, -10)
+         << box(10, -290)
+         << color(0, 255, 0)
+         << move_to(615, 400)
+         << text("BLUE WON!")
+         << move_to(640, 520)
+         << text("RETRY");
 }

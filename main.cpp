@@ -14,7 +14,7 @@ using namespace std;
 //green(170, 255, 209)
 //blue(167, 199, 255)
 //red(199, 0, 57)
-//allapot: 0-menu, 1-jatek, 2-rules, 5-exit
+//allapot: 0-menu, 1-jatek, 2-rules, 3-tele palya, 4-gyozelem, 6-exit
 
 int main()
 {
@@ -24,29 +24,24 @@ int main()
     int allapot=0;
     int kor=1;
     event evt;
-    Rajzol felulet(kor);
+    Rajzol felulet;
     Jatek jatek(kor, allapot, felulet);
 
     while(gin >> evt && evt.keycode!=key_escape)
     {
-        jatek.set_allapot(allapot);
-        jatek.set_kor(kor);
-        jatek.allapot_vizsg(jatek, felulet, evt);
+        /*jatek.allapot_vizsg(jatek, felulet, evt, allapot, kor);
         allapot=jatek.get_allapot();
-        kor=jatek.get_kor();
         if(allapot==5)
         {
             break;
-        }
-
-        /*if(allapot==0)
+        }*/
+        if(allapot==0)
         {
-            //felulet.palya_rajz();
+            felulet.full_clr();
             felulet.clr_src();
             felulet.menu_rajz();
             if(evt.type == ev_mouse && evt.button==btn_left)
             {
-                jatek.katt_vizsg(allapot, evt);
                 if(allapot==0)
                 {
                     if(evt.pos_x >= 1046 && evt.pos_x <= 1110 && evt.pos_y >= 60 && evt.pos_y <= 80)
@@ -59,7 +54,7 @@ int main()
                     }
                     else if(evt.pos_x >= 1030 && evt.pos_x <= 1130 && evt.pos_y >= 120 && evt.pos_y <= 140)
                     {
-                        allapot=5;
+                        allapot=6;
                     }
                 }
             }
@@ -68,27 +63,19 @@ int main()
         else if(allapot==1)
         {
 
+            jatek.set_allapot(allapot);
             felulet.clr_src();
-            felulet.kor_rajz();
             felulet.palya_rajz();
-            jatek.kor_vizsg(kor, evt, felulet, jatek); //ez a ketto hibas
+            felulet.kor_rajz(kor);
+            jatek.kor_vizsg(kor, evt, felulet, jatek);
+            jatek.gyozelem_vizsg();
+            allapot=jatek.get_allapot();
             kor=jatek.get_kor();
-            if(kor==1)
-            {
-                felulet.green_rajz(evt, felulet);
-                kor=felulet.get_kor();
-            }
-            else if(kor==2)
-            {
-                felulet.blue_rajz(evt, felulet);
-                kor=felulet.get_kor();
-            }
         }
         else if(allapot==2)
         {
             felulet.clr_src();
             felulet.rules_rajz();
-            //jatek.katt_vizsg(allapot, evt);
             if(evt.type == ev_mouse && evt.button==btn_left)
             {
                 if(evt.pos_x >= 1046 && evt.pos_x <= 1100 && evt.pos_y >= 170 && evt.pos_y <= 190)
@@ -98,11 +85,35 @@ int main()
             }
 
         }
-        else if(allapot==5)
+        else if(allapot==3)
+        {
+            felulet.telepalya_rajz();
+            if(evt.type == ev_mouse && evt.button==btn_left)
+            {
+                if(evt.pos_x >= 640 && evt.pos_x <= 680 && evt.pos_y >= 520 && evt.pos_y <= 540)
+                {
+                    allapot=0;//Menu
+                }
+            }
+            jatek.helyek_null();
+        }
+        else if(allapot==4)
+        {
+            jatek.gyozelem(felulet);
+            if(evt.type == ev_mouse && evt.button==btn_left)
+            {
+                if(evt.pos_x >= 640 && evt.pos_x <= 680 && evt.pos_y >= 520 && evt.pos_y <= 540)
+                {
+                    allapot=0;//Menu
+                }
+            }
+            jatek.helyek_null();
+        }
+        else if(allapot==6)
         {
             break;
         }
-        gout << refresh;*/
+        gout << refresh;
     }
     return 0;
 }

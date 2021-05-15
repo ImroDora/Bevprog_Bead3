@@ -8,24 +8,28 @@
 using namespace genv;
 using namespace std;
 
-struct Point {
+struct Point
+{
     int x;
     int y;
-    Point(int a,int b){
-    x=a;
-    y=b;
+    Point(int a,int b)
+    {
+        x=a;
+        y=b;
     }
-    Point():Point(0,0){}
+    Point():Point(0,0) {}
 };
 
-struct Size {
+struct Size
+{
     int w;
     int h;
-    Size(int a,int b){
-    w=a;
-    h=b;
+    Size(int a,int b)
+    {
+        w=a;
+        h=b;
     }
-    Size():Size(0,0){}
+    Size():Size(0,0) {}
 };
 
 /*
@@ -35,7 +39,8 @@ meret.h=4;
 Size mmeret(5,4);
 */
 
-class Widget {
+class Widget
+{
 private:
     Point pos;
     Size size;
@@ -45,9 +50,6 @@ private:
 public:
     Widget(Point pos_ = { 0, 0 }, Size size_ = { 0, 0 });
     virtual ~Widget();
-
-    virtual void draw();
-    virtual void change_value(event evt);
 
     Point get_pos() const;
     void set_pos(Point new_pos);

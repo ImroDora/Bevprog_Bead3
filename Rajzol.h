@@ -9,18 +9,19 @@ using namespace genv;
 class Rajzol: public Widget
 {
 public:
-    Rajzol(int kor_szam);
+    Rajzol();
     virtual ~Rajzol();
+    void full_clr();
     virtual void clr_src();
     void palya_rajz();
     void menu_rajz();
-    void kor_rajz();
+    void kor_rajz(int korszam);
     void rules_rajz();
-    void green_rajz(event evt, Rajzol felulet);
-    void blue_rajz(event evt, Rajzol felulet);
-
-    int get_kor() const;
-    void set_kor(int new_kor);
+    void green_rajz(event evt, Rajzol felulet, Point a, Size b, int i, int j);
+    void blue_rajz(event evt, Rajzol felulet, Point a, Size b, int i, int j);
+    void telepalya_rajz();
+    void zoldgyozelem_rajz();
+    void kekgyozelem_rajz();
 
 protected:
 

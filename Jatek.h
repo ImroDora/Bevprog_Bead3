@@ -24,6 +24,8 @@ struct Szinezett
 {
     bool zold;
     bool kek;
+    int x;
+    int y;
     Szinezett(bool zold_, bool kek_)
     {
         zold=zold_;
@@ -38,10 +40,11 @@ public:
     Jatek(int kor, int allapot, Rajzol felulet);
     virtual ~Jatek();
 
-    //oid helyek_nulla();
-    void allapot_vizsg(Jatek jatek, Rajzol felulet, event evt);
-    //void katt_vizsg(int allapot, event evt);
-    //void kor_vizsg(int kor, event evt, Rajzol felulet, Jatek jatek);
+    void allapot_vizsg(Jatek jatek, Rajzol felulet, event evt, int allapot, int kor);
+    void kor_vizsg(int kor, event evt, Rajzol felulet, Jatek jatek);
+    void gyozelem_vizsg();
+    void gyozelem(Rajzol felulet);
+    void helyek_null();
 
     Pontok get_pontszam() const;
     void set_pontszam(Pontok new_pontszam);
@@ -57,8 +60,11 @@ private:
     Pontok pontszam;
     int jatekkor;
     int jatekallapot;
-    Szinezett sorok;
-    vector<Szinezett> helyek;
+    int toltott;
+    int gyoztes;
+    int kekosszesen;
+    int zoldosszesen;
+    Szinezett negyzet[15][15];
     //0-üres, 1-zold, 2-kek
 };
 
