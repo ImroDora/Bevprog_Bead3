@@ -35,56 +35,6 @@ Jatek::~Jatek()
     //dtor
 }
 
-void Jatek::allapot_vizsg(Jatek jatek, Rajzol felulet, event evt, int allapot, int kor)
-{
-        jatek.set_allapot(allapot);
-        if(jatekallapot==0)
-        {
-            //felulet.palya_rajz();
-            felulet.clr_src();
-            felulet.menu_rajz();
-            if(evt.type == ev_mouse && evt.button==btn_left)
-            {
-                if(evt.pos_x >= 1046 && evt.pos_x <= 1110 && evt.pos_y >= 60 && evt.pos_y <= 80)
-                {
-                    jatekallapot=1;//Start
-                }
-                else if(evt.pos_x >= 1046 && evt.pos_x <= 1110 && evt.pos_y >= 90 && evt.pos_y <= 110)
-                {
-                    jatekallapot=2;//Rules
-                }
-                else if(evt.pos_x >= 1030 && evt.pos_x <= 1130 && evt.pos_y >= 120 && evt.pos_y <= 140)
-                {
-                    jatekallapot=5;
-                }
-            }
-
-        }
-        else if(jatekallapot==1)
-        {
-
-            felulet.clr_src();
-            felulet.palya_rajz();
-            felulet.kor_rajz(kor);
-            jatek.kor_vizsg(kor, evt, felulet, jatek);
-            kor=jatek.get_kor();
-        }
-        else if(jatekallapot==2)
-        {
-            felulet.clr_src();
-            felulet.rules_rajz();
-            if(evt.type == ev_mouse && evt.button==btn_left)
-            {
-                if(evt.pos_x >= 1046 && evt.pos_x <= 1100 && evt.pos_y >= 170 && evt.pos_y <= 190)
-                {
-                    jatekallapot=0;//Menu
-                }
-            }
-
-        }
-        gout << refresh;
-}
-
 void Jatek::kor_vizsg(int kor, event evt, Rajzol felulet, Jatek jatek)
 {
     //jatek.set_kor(kor); ez a jo
@@ -151,41 +101,49 @@ void Jatek::gyozelem_vizsg()
                 for(int k=1; k <= 4; k++)
                 {
                     //jobbra
-                    if(negyzet[i+k][j].zold)
+                    if(i+k <= 15 && negyzet[i+k][j].zold)
                         zoldosszesen++;
                     if(zoldosszesen==5)
+                    {
                         jatekallapot=4;
                         gyoztes=1;
+                    }
                 }
                 zoldosszesen=1;
                 for(int k=1; k <= 4; k++)
                 {
                     //lefele
-                    if(negyzet[i][j+k].zold)
+                    if(j+k <= 15 && negyzet[i][j+k].zold)
                         zoldosszesen++;
                     if(zoldosszesen==5)
+                    {
                         jatekallapot=4;
                         gyoztes=1;
+                    }
                 }
                 zoldosszesen=1;
                 for(int k=1; k <= 4; k++)
                 {
                     //keresztbe jobbra
-                    if(negyzet[i+k][j+k].zold)
+                    if(i+k <= 15 && j+k <= 15 && negyzet[i+k][j+k].zold)
                         zoldosszesen++;
                     if(zoldosszesen==5)
+                    {
                         jatekallapot=4;
                         gyoztes=1;
+                    }
                 }
                 zoldosszesen=1;
                 for(int k=1; k <= 4; k++)
                 {
                     //keresztbe balra
-                    if(negyzet[i-k][j+k].zold)
+                    if(i-k >= 1 && j+k <= 15 && negyzet[i-k][j+k].zold)
                         zoldosszesen++;
                     if(zoldosszesen==5)
+                    {
                         jatekallapot=4;
                         gyoztes=1;
+                    }
                 }
             }
             if(negyzet[i][j].kek)//gyoztes=2;
@@ -194,41 +152,49 @@ void Jatek::gyozelem_vizsg()
                 for(int k=1; k <= 4; k++)
                 {
                     //jobbra
-                    if(negyzet[i+k][j].kek)
+                    if(i+k <= 15 && negyzet[i+k][j].kek)
                         kekosszesen++;
                     if(kekosszesen==5)
+                    {
                         jatekallapot=4;
                         gyoztes=2;
+                    }
                 }
                 kekosszesen=1;
                 for(int k=1; k <= 4; k++)
                 {
                     //lefele
-                    if(negyzet[i][j+k].zold)
+                    if(j+k <= 15 && negyzet[i][j+k].kek)
                         kekosszesen++;
                     if(kekosszesen==5)
+                    {
                         jatekallapot=4;
                         gyoztes=2;
+                    }
                 }
                 kekosszesen=1;
                 for(int k=1; k <= 4; k++)
                 {
                     //keresztbe jobbra
-                    if(negyzet[i+k][j+k].zold)
+                    if(i+k <= 15 && j+k <= 15 && negyzet[i+k][j+k].kek)
                         kekosszesen++;
                     if(kekosszesen==5)
+                    {
                         jatekallapot=4;
                         gyoztes=2;
+                    }
                 }
                 kekosszesen=1;
                 for(int k=1; k <= 4; k++)
                 {
                     //keresztbe balra
-                    if(negyzet[i-k][j+k].zold)
+                    if(i-k >= 1 && j+k <= 15 && negyzet[i-k][j+k].kek)
                         kekosszesen++;
                     if(kekosszesen==5)
+                    {
                         jatekallapot=4;
                         gyoztes=2;
+                    }
                 }
             }
         }
@@ -282,6 +248,10 @@ int Jatek::get_kor() const
 void Jatek::set_kor(int new_kor)
 {
     jatekkor=new_kor;
+}
+void Jatek::set_toltott(int new_toltott)
+{
+    toltott=new_toltott;
 }
 
 //green(170, 255, 209)

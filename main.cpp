@@ -38,6 +38,7 @@ int main()
         if(allapot==0)
         {
             felulet.full_clr();
+            jatek.set_toltott(0);
             felulet.clr_src();
             felulet.menu_rajz();
             if(evt.type == ev_mouse && evt.button==btn_left)
@@ -90,7 +91,7 @@ int main()
             felulet.telepalya_rajz();
             if(evt.type == ev_mouse && evt.button==btn_left)
             {
-                if(evt.pos_x >= 640 && evt.pos_x <= 680 && evt.pos_y >= 520 && evt.pos_y <= 540)
+                if(evt.pos_x >= 640 && evt.pos_x <= 700 && evt.pos_y >= 520 && evt.pos_y <= 540)
                 {
                     allapot=0;//Menu
                 }
@@ -102,7 +103,7 @@ int main()
             jatek.gyozelem(felulet);
             if(evt.type == ev_mouse && evt.button==btn_left)
             {
-                if(evt.pos_x >= 640 && evt.pos_x <= 680 && evt.pos_y >= 520 && evt.pos_y <= 540)
+                if(evt.pos_x >= 640 && evt.pos_x <= 700 && evt.pos_y >= 520 && evt.pos_y <= 540)
                 {
                     allapot=0;//Menu
                 }

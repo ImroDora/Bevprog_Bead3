@@ -40,7 +40,6 @@ public:
     Jatek(int kor, int allapot, Rajzol felulet);
     virtual ~Jatek();
 
-    void allapot_vizsg(Jatek jatek, Rajzol felulet, event evt, int allapot, int kor);
     void kor_vizsg(int kor, event evt, Rajzol felulet, Jatek jatek);
     void gyozelem_vizsg();
     void gyozelem(Rajzol felulet);
@@ -53,6 +52,7 @@ public:
     void set_allapot(int new_allapot);
     int get_kor() const;
     void set_kor(int new_kor);
+    void set_toltott(int new_toltott);
 
 protected:
 
